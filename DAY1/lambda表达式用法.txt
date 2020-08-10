@@ -1,0 +1,53 @@
+// Comparator接口的匿名实现类
+  Comparator<Integer> com1 = new Comparator<Integer>() {
+   @Override
+   public int compare(Integer o1, Integer o2) {
+    return Integer.compare(o1, o2);
+   }
+  };
+  System.out.println(com1.compare(100, 200));
+  
+  
+ // Lambda表达式
+  Comparator<Integer> com2 = (o1, o2) -> Integer.compare(o1, o2);
+  System.out.println(com2.compare(100, 200));
+  
+  
+ //方法引用
+  Comparator<Integer> com3 = Integer :: compare;
+  System.out.println(com3.compare(100, 200));
+  
+
+  
+  
+  
+  
+ // 语法格式一 ： 无参，无返回值
+  Runnable r2 = () -> System.out.println("test Lambda");
+  
+  
+ // 语法格式二：Lambda 需要一个参数，但是没有返回值
+  Consumer<String> con2 = (String str) -> System.out.println(str);
+  
+  
+ // 语法格式三 ： 数据类型可以省略 ，因为可由编译器推断得出
+  Consumer<String> con3 = (str) -> System.out.println(str); // 类型推断
+  
+  List<String> list = new ArrayList<>();    // 类型推断
+  
+  int[] arr2 = {1, 2, 3, 4, 5};    // 类型推断
+  
+  
+ // 语法格式四：Lambda 若只需要一个参数时，参数的小括号可以省略
+  Consumer<String> con4 = str -> System.out.println(str);
+  
+  
+ // 语法格式五：Lambda 需要两个或以上的参数，多条执行语句，并且可以有返回值
+  Comparator<Integer> com4 = (o1, o2) -> {
+   System.out.println("test Lambda");
+   return o1.compareTo(o2);
+  };
+  
+  
+ // 语法格式六：当 Lambda 体只有一条语句时，return与大括号都可以省略
+  Comparator<Integer> com5 = (o1, o2) -> o1.compareTo(o2);
