@@ -1,0 +1,35 @@
+具体错误：ng : 无法加载文件 C:\Users\Lenovo\AppData\Roaming\npm\ng.ps1，因为在此系统上禁止运行脚本。有  
+关详细信息，请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policie 
+s。
+所在位置 行:1 字符: 1
++ ng serve --open
++ ~~
+    + CategoryInfo          : SecurityError: (:) []，PSSecurityException
+    + FullyQualifiedErrorId : UnauthorizedAccess
+
+解决办法：https://blog.csdn.net/l_x_cser/article/details/104956657
+
+实测解决:系统上禁止运行脚本。有关详细信息， 请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies
+
+SeanHit 2020-03-18 23:19:17   3356   收藏 1
+分类专栏： 开发问题
+版权
+browserify : 无法加载文件 C:\Users\86136\AppData\Roaming\npm\browserify.ps1，因为在此系统上禁止运行脚本。有关详细信息，
+请参阅 https:/go.microsoft.com/fwlink/?LinkID=135170 中的 about_Execution_Policies。
+所在位置 行:1 字符: 1
+在这里插入图片描述
+今天在打包模块时候出现这种问题，愿意是需要开启允许禁止脚本运行。
+原因是： 首次在计算机上启动 Windows PowerShell 时，现用执行策略很可能是 Restricted（默认设置）。Restricted 策略不允许任何脚本运行。
+那么就需要收到开启运行脚本：
+
+win+x 打开PowerShell（管理员）
+set-ExecutionPolicy RemoteSigned //设置为打开
+在这里插入图片描述
+键入Y或者A,同意
+执行get-executionpolicy查看是否更改成功，为RemoteSigned表示成功
+在这里插入图片描述
+一般到这里就可以执行问题了。
+上面这个一般就可以解决问题了，下面这个可能有的人需要（包括我）
+
+如果回到原来目录下执行还是原来的问题，可能是原来目录下和当前设置的并没有同步，还是保持原来的设置。
+那么可以在powershell中找到相应命令行，进行运行脚本，即可执行。
