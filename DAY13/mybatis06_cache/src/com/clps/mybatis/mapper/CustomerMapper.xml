@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:指定接口全类名 -->
+<mapper namespace="com.clps.mybatis.mapper.CustomerMapper">
+	
+	<!-- 
+		表示采用框架自带二级缓存作为缓冲区 -->
+	<!-- <cache eviction="FIFO" flushInterval="60000" readOnly="true" size="512"/> -->
+	
+	<!-- 表示采用ehcache缓存组件作为二级缓存 -->
+	<!-- <cache type="org.mybatis.caches.ehcache.EhcacheCache"/> -->
+	
+	<select id="getCustomer" 
+				parameterType="java.lang.Integer" 
+				resultType="com.clps.mybatis.bean.Customer" >
+		select CUST_ID as custId,cust_name as custName,cust_age as custAge 
+		from tbl_cust 
+		where cust_id=#{custId}
+	</select>
+
+</mapper>

@@ -1,0 +1,22 @@
+<ehcache>
+	<!-- 指定硬盘的缓存目录 -->
+    <diskStore path="D:/temp/ehcache"/>
+
+	<!-- 设置默认的缓存区
+		maxElementsInMemory="10000"  设置最大的缓存对象数量
+        eternal="false" 设置缓存数据是否过期:true表示永远不过期;false允许过期,通过timeToIdleSeconds和timeToLiveSeconds属性控制过期 
+        timeToIdleSeconds="20" 对象在缓存区中空闲的时间,单位秒.
+        timeToLiveSeconds="120" 对象在缓存区中一共存活的时间,单位秒.
+        overflowToDisk="true" 对象超过最大的缓存数量,将数据往硬盘上缓存.
+	 -->
+    <defaultCache
+        maxElementsInMemory="10000"
+        eternal="false"
+        timeToIdleSeconds="20"
+        timeToLiveSeconds="120"
+        overflowToDisk="true"
+        />
+        
+     
+
+</ehcache>

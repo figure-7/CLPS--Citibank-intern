@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clps.mybatis.mapper.OrderMapper">
+	
+	
+	<resultMap type="com.clps.mybatis.bean.Order" id="OrderResultMap">
+		<id column="order_id" property="orderId"/>
+		<result column="order_name" property="orderName"/>
+		<result column="order_amount" property="orderAmount"/>
+		<association property="customer" javaType="com.clps.mybatis.bean.Customer">
+			<id column="cust_id" property="custId"/>
+			<result column="cust_name" property="custName"/>
+			<result column="cust_age" property="custAge"/>
+		</association>
+	</resultMap>
+	
+	<!-- ①采用一条语句立即查询关联对象. -->
+	<select id="getOrderByOrderId" resultMap="OrderResultMap">
+		select o.order_id,o.order_name,o.order_amount,c.cust_id,c.cust_name,c.cust_age
+		 from tbl_order o,tbl_cust c
+		where o.cust_id=c.cust_id and o.order_id=#{orderId};
+	</select>
+	
+	<!-- ②如果采用 立即查询关联对象.那么,如果关联对象数据使用不上,也将其查询,浪费资源(内存)
+	采用分段查询,可以支持立即查询,也可以支持延迟加载. -->
+	<!-- <resultMap type="com.clps.mybatis.bean.Order" id="OrderResultMap">
+		<id column="order_id" property="orderId"/>
+		<result column="order_name" property="orderName"/>
+		<result column="order_amount" property="orderAmount"/>
+		<association property="customer" column="cust_id" javaType="Customer"
+				select="com.clps.mybatis.mapper.CustomerMapper.getCustomerById"></association>	
+	</resultMap>
+	<select id="getOrderByOrderId" resultMap="OrderResultMap">
+		select o.order_id,o.order_name,o.order_amount,o.cust_id
+		 from tbl_order o
+		where o.order_id=#{orderId}
+	</select> -->
+	
+</mapper>

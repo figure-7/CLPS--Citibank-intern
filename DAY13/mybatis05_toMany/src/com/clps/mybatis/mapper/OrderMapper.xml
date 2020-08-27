@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clps.mybatis.mapper.OrderMapper">
+	
+	<resultMap type="com.clps.mybatis.bean.Order" id="OrderResultMap">
+		<id column="order_id" property="orderId"/>
+		<result column="order_name" property="orderName"/>
+		<result column="order_amount" property="orderAmount"/>	
+	</resultMap>
+	<select id="getOrderByCustId" resultMap="OrderResultMap">
+		select o.order_id,o.order_name,o.order_amount,o.cust_id
+		 from tbl_order o
+		where o.cust_id=#{custId}
+	</select>
+	
+</mapper>

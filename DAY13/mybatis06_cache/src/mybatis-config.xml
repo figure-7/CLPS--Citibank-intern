@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	 
+	<!-- 加载属性配置文件 -->
+	<properties resource="jdbc.properties" />
+
+	<!-- 设置全局配置 -->
+
+	<!-- <settings>
+		<setting name="cacheEnabled" value="true"/>
+		<setting name="localCacheScope" value="STATEMENT"/>
+	</settings> -->
+ 	
+ 	
+ 	<!-- 别名设置 -->
+ 	<typeAliases>
+		<!--  		
+		<typeAlias type="com.clps.mybatis.bean.Customer" alias="Customer"/>
+ 		<typeAlias type="com.clps.mybatis.bean.Book" alias="Book"/>
+ 		<typeAlias type="com.clps.mybatis.bean.Order" alias="Order"/> -->
+ 		<!-- 设置扫描的包,类的别名就是类的简单类名 -->
+ 		<package name="com.clps.mybatis.bean"/>
+ 	</typeAliases>
+ 	
+ 	<!-- 类型处理器 -->
+	<!--  	
+	<typeHandlers>
+ 		<typeHandler handler="" javaType="" jdbcType=""/>
+ 	</typeHandlers> -->
+ 	
+	<!-- 配置连接数据库信息 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driverClass}" />
+				<property name="url" value="${jdbc.jdbcUrl}" />
+				<property name="username" value="${jdbc.user}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 映射配置文件:框架使用SQL语句将JavaBean对象与数据库表进行映射 -->
+	<mappers>
+		<!-- <mapper resource="com/clps/mybatis/mapper/CustomerMapper.xml" />
+		<mapper class="com.clps.mybatis.mapper.CustomerAnnoMapper"/> -->
+		<package name="com.clps.mybatis.mapper"/>
+	</mappers>
+	
+	
+</configuration>
