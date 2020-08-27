@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>SpringMVC_01_HelloWorld</display-name>
+
+	<!-- 核心控制器 -->
+	<!-- Caused by: java.io.FileNotFoundException: 
+	Could not open ServletContext resource [/WEB-INF/DispatcherServlet-servlet.xml] 
+	默认加载配置文件从/WEB-INF/DispatcherServlet-servlet.xml加载，文件名称规则：<servlet-name>+"-servlet.xml"
+	-->
+	<servlet>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		
+		<init-param>
+			<param-name>contextConfigLocation</param-name> <!-- 通过固定参数名称给核心控制器传递参数，从classpath路径下加载配置文件 -->
+			<param-value>classpath:/springmvc-servlet*.xml</param-value>
+		</init-param>
+		
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>
