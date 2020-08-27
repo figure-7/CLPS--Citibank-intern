@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clps.mybatis.mapper.CustomerMapper">
+	
+	
+	
+	<!-- 测试if标签 -->
+	
+	<!-- <select id="getListByMinMaxAge" resultType="Customer">
+		select cust_id custId,cust_name custName,cust_age custAge
+		from tbl_cust
+		where 1=1
+			<if test="minAge!=null">
+				and cust_age > #{minAge}
+			</if>
+			<if test="maxAge!=null">
+				<![CDATA[and cust_age < #{maxAge}]]> 
+			</if>			
+	</select> -->
+	
+	 
+	<!-- <select id="getListByMinMaxAge" resultType="Customer">
+		select cust_id custId,cust_name custName,cust_age custAge
+		from tbl_cust
+		<where>
+			<if test="minAge!=null">
+				and cust_age > #{minAge}
+			</if>
+			<if test="maxAge!=null">
+				<![CDATA[and cust_age < #{maxAge}]]> 
+			</if>
+		</where>			
+	</select> -->
+	
+	
+	<select id="getListByMinMaxAge" resultType="Customer">
+		select cust_id custId,cust_name custName,cust_age custAge
+		from tbl_cust
+		<where>
+			<choose>
+				<when test="maxAge!=null">
+					<![CDATA[and cust_age < #{maxAge}]]> 
+				</when>
+				<when test="minAge!=null">
+					and cust_age > #{minAge}
+				</when>
+				<otherwise>
+					and cust_name like '%l%'
+				</otherwise>
+			</choose>
+		</where>			
+	</select>
+	
+	<select id="getListBySeveralIds" parameterType="list" resultType="Customer">
+		select cust_id custId,cust_name custName,cust_age custAge
+		from tbl_cust where cust_id in 
+		<foreach collection="custIdList" item="cid" open="(" separator="," close=")">
+			#{cid}
+		</foreach>		
+	</select>
+	
+	
+	<insert id="batchSaveCustomer">
+			<foreach collection="customerList" item="customer" separator=";">
+				INSERT INTO tbl_cust (cust_name, cust_age) VALUES (#{customer.custName}, #{customer.custAge})
+			</foreach>
+	</insert>
+	
+	
+	<insert id="saveCustomerClever" parameterType="Customer">
+		INSERT INTO tbl_cust 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="custName!=null">
+				cust_name,
+			</if>
+			<if test="custAge!=null">
+				cust_age,
+			</if>
+		</trim>
+		values
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="custName!=null">
+				#{custName},
+			</if>
+			<if test="custAge!=null">
+				#{custAge},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateCustomer" parameterType="Customer">
+		update tbl_cust 		
+		<set>
+			<if test="custName!=null">
+				cust_name=#{custName},
+			</if>
+			<if test="custAge!=null">
+				cust_age=#{custAge},
+			</if>
+		</set>
+		 <!-- where cust_id=#{custId} -->
+		 <where>
+		 	<if test="custId!=null">
+				cust_id=#{custId}
+			</if>
+		 </where>
+	</update>
+	
+
+</mapper>

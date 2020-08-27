@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:指定接口全类名 -->
+<mapper namespace="com.clps.mybatis.mapper.CustomerMapper">
+	
+	<!-- 实验0：保存Customer
+		id:指定接口的方法名称
+		parameterType : 指定方法参数的类型
+		#{}表示获取请求参数,给SQL语句的?号传递参数
+	-->
+	<insert id="saveCustomer" parameterType="Customer" useGeneratedKeys="true" keyProperty="custId" keyColumn="cust_id">
+		insert into tbl_cust(cust_name,cust_age) values(#{custName},#{custAge})
+	</insert>
+	
+	<!-- 实验1：删除cust_id为8的Customer
+		根据id删除数据 -->
+	<delete id="deleteCustomer" parameterType="java.lang.Integer">
+		delete from tbl_cust where cust_id=#{custId}
+	</delete>
+	
+	<!-- 实验2：更新cust_id为10的Customer的姓名和年龄
+		更新用户信息 -->
+	<update id="updateCustomer" parameterType="com.clps.mybatis.bean.Customer">
+		update tbl_cust set cust_name=#{custName} , cust_age=#{custAge} where cust_id=#{custId}
+	</update>
+	
+	<!--实验3：查询cust_id为12的Customer 
+		查询一个对象 -->
+	<select id="getCustomer" 
+				parameterType="java.lang.Integer" 
+				resultType="com.clps.mybatis.bean.Customer">
+		select CUST_ID as custId,cust_name as custName,cust_age as custAge 
+		from tbl_cust 
+		where cust_id=#{custId}
+	</select>
+	
+	<!-- 实验4：查询List<Customer>，没有查询条件
+		查询多个对象,以List存储
+		resultType : 依然是List集合的泛型,不是集合本身类型.
+	 -->
+	<select id="queryCustomerList" resultType="com.clps.mybatis.bean.Customer">
+		select cust_id as custId,cust_name as custName,cust_age as custAge 
+		from tbl_cust
+	</select>
+	
+	<!-- 实验5：查询List<Customer>，查询条件是 (以实体类对象形式封装查询条件) -->
+	<select id="queryCustomerListByNameAndAge" 
+				parameterType="com.clps.mybatis.bean.Customer" 
+				resultType="com.clps.mybatis.bean.Customer">
+		select cust_id as custId,cust_name as custName,cust_age as custAge 
+		from tbl_cust 
+		where			
+			<![CDATA[
+			cust_name like #{custName} and cust_age > #{custAge}
+			]]>
+	</select>
+	
+	<!-- 实验5：查询List<Customer>，查询条件是 (以实体类对象形式封装查询条件) -->
+	<select id="queryCustomerListByNameAndAgeMap" 
+				parameterType="map" 
+				resultType="com.clps.mybatis.bean.Customer">
+		select cust_id as custId,cust_name as custName,cust_age as custAge 
+		from tbl_cust 
+		where			
+			<![CDATA[
+			cust_name like #{custName} and cust_age > #{custAge}
+			]]>
+	</select>
+	
+	<!-- 
+		实验6：查询List<Customer>，查询条件是 (以Map类型的对象封装查询条件)
+		cust_name包含'a'
+		order_amount大于20
+	 -->
+	<select id="queryCustomerListByMap" 
+				parameterType="map" 
+				resultType="com.clps.mybatis.bean.Customer">
+		select distinct c.cust_id as custId,c.cust_name as custName,c.cust_age as custAge 
+		from tbl_cust c
+		left join tbl_order o
+			on c.cust_id  = o.cust_id
+			where o.order_amount > #{orderAmount} and c.cust_name like #{custName}
+	</select>
+	
+	
+	<!-- 实验7：查询List<Customer>，查询条件是 (传多个零散的参数)
+		通过@Param("minAge")注解的value属性指定参数名称,可以使用#{minAge}来获取参数
+	 -->
+	<select id="queryCustomerListByAge" 
+				resultType="com.clps.mybatis.bean.Customer">
+		select c.cust_id as custId,c.cust_name as custName,c.cust_age as custAge 
+		from tbl_cust c 
+		where c.cust_age > #{minAge} and c.cust_age &lt; #{maxAge}
+	</select>
+	
+	
+	<!-- 实验8：查询order_id为5的cust_name和order_name (将零散的查询结果封装到Map对象中返回)
+		以Map形式封装返回数据,有别名存在,Map的key为别名,否则为字段名
+	 -->
+	<select id="queryCustNameAndOrderName" resultType="map">
+		select c.cust_name as custName,o.order_name as orderName
+		from tbl_order o
+		left join tbl_cust c
+			on c.cust_id  = o.cust_id
+		where o.order_id=5
+	</select>
+	
+	<!-- 
+	实验9：查询order_amount大于20的cust_name和order_name
+	(查询结果的一条记录对应一个Map对象,多条记录的结果可以使用List封装Map对象)
+	 -->
+	<select id="queryCustNameAndOrderNameMap" resultType="map">
+		select c.cust_name as custName,o.order_name as orderName
+		from tbl_order o
+		left join tbl_cust c
+			on c.cust_id  = o.cust_id
+		where o.order_amount > #{orderAmount}
+	</select>
+	
+	
+	<!-- 实验10：查询cust_id为12的Customer，但是使用resultMap映射 (使用resultMap方式解决字段名与属性名不一致问题) -->	
+	<resultMap type="com.clps.mybatis.bean.Customer" id="resultMap">
+		<id column="cust_id" property="custId"/>
+		<result column="cust_name" property="custName"/>
+		<result column="cust_age" property="custAge"/>
+	</resultMap>
+	
+	<select id="getCustomerResultMap" resultMap="resultMap">
+		select * 
+		from tbl_cust 
+		where cust_id=#{custId}
+	</select>
+	
+	<!-- 实验11：查询结果为单值，统计Customer数量 -->
+	<select id="countCustomer" resultType="int">
+		select count(cust_id) from tbl_cust
+	</select>
+	
+	<!-- 实验12：执行DDL语句创建数据库表
+		${} 用于取值,拼串使用.
+		表名位置不能使用?号占位符,所以,不能使用#{},而应该使用${}进行拼串
+		
+		传递参数问题:
+			使用@Param("tableName") 指定${tableName}所获取参数值;
+			使用${_parameter}固定写法获取参数值,方法入参不需要使用@Param注解
+	 -->
+	<update id="createTable" parameterType="java.lang.String">
+		create table ${tableName} like tbl_cust
+	</update>
+	<update id="createTable2" parameterType="java.lang.String">		
+		create table ${_parameter} like tbl_cust
+	</update>
+
+</mapper>
