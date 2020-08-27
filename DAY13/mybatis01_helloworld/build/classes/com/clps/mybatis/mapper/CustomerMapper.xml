@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace:指定接口全类名 -->
+<mapper namespace="com.clps.mybatis.mapper.CustomerMapper">
+	
+	<!-- 保存 
+		id:指定接口的方法名称
+		parameterType : 指定方法参数的类型
+		#{}表示获取请求参数,给SQL语句的?号传递参数
+	-->
+	<insert id="saveCustomer" parameterType="com.clps.mybatis.bean.Customer">
+		insert into tbl_cust(cust_name,cust_age) values(#{custName},#{custAge});
+	</insert>
+</mapper>
