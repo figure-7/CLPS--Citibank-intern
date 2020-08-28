@@ -1,0 +1,2 @@
+server.port=8001
+application.message=this is sample value for properties file

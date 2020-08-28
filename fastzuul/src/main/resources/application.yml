@@ -1,0 +1,17 @@
+server:
+  port: 9005
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+spring:
+  application:
+    name: fastzuul
+  jackson:
+    serialization:
+      indent-output: true
+zuul:
+  routes:
+    appUrl:
+      path: /v1/**
+      serviceId: fastclient

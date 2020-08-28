@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: Demo
+Implementation-Version: 1.0.0
+Built-By: Administrator
+Implementation-Vendor-Id: com.test.hello
+Build-Jdk: 1.8.0_241
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/Demo
+Created-By: Maven Integration for Eclipse
+

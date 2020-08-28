@@ -1,0 +1,6 @@
+java IDE -- IDEA/Eclipse/STS
+
+database -- mysql(Navicat Premium 15)/mongoDB(MongoDBCompass)
+
+PostMan
+

@@ -1,0 +1,12 @@
+server:
+  port: 9006
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+spring:
+  application:
+    name: fastribbon
+  jackson:
+    serialization:
+      indent-output: true
