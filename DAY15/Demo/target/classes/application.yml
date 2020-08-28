@@ -1,0 +1,8 @@
+server:
+  port: 9999
+spring:
+  jackson:
+    serialization:
+      indent-output: true
+  application:
+    name: hello-world

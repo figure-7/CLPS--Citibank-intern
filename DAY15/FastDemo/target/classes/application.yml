@@ -1,0 +1,33 @@
+server:
+  port: 8001
+application:
+  message: this is sample value for yaml file
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/     #模版路径
+    suffix: .html                     #模版后缀
+    servlet:
+      content-type: text/html         #设置 Content-type
+    encoding: UTF-8                   #编码方式
+    mode: HTML5                       #校验 HTML5 格式
+    cache: false                      #关闭缓存，在开发过程中可立即看到页面修改结果
+  datasource:
+    url: jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: mqslll20141026
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jackson:
+    serialization:
+      indent-output: true
+  data:
+    mongodb:
+      database: mqslll
+      host: 127.0.0.1
+      port: 27017
+
+mybatis:
+  mapper-locations: classpath:/mapping/*.xml
+  type-aliases-package: com.chinalink.demo.FastDemo.entity
+  configuration:
+    lazy-loading-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # show sql in console
