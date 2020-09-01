@@ -1,0 +1,13 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: todo
+  jackson:
+    serialization:
+      indent-output: true
+  data:
+    mongodb:
+      database: mqslll
+      host: 127.0.0.1
+      port: 27017

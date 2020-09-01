@@ -1,0 +1,23 @@
+server:
+  port: 9008
+spring:
+  application:
+    name: fastlocalconfig
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  jackson:
+    serialization:
+      indent-output: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+  instance:
+    prefer-ip-address: true

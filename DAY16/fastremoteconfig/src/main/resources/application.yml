@@ -1,0 +1,33 @@
+server:
+  port: 9010
+spring:
+  application:
+    name: fastremoteconfig
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    bus:
+      trace:
+        enable: true
+    config:
+      server:
+        git:
+          uri: https://github.com/mqslllloveduoduo/eduonline/
+          searchPaths: customer
+          username: mqslllloveduoduo
+          password: mqslll20141026
+  jackson:
+    serialization:
+      indent-output: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9001/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

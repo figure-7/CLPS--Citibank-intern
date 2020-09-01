@@ -1,0 +1,29 @@
+server:
+  port: 9011
+spring:
+  application:
+    name: fastremoteconfigclient
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  cloud:
+    config:
+      name: fastremoteconfigclient
+      label: master
+      discovery:
+        enabled: true
+        serviceId: fastremoteconfig
+  jackson:
+    serialization:
+      indent-output: true
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9001/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: bus-refresh

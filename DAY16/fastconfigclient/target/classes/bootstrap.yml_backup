@@ -1,0 +1,22 @@
+server:
+  port: 9009
+spring:
+  application:
+    name: fastconfigclient
+  profiles:
+    active: lalala
+  cloud:
+    config:
+      uri: http://localhost:9008
+      fail-fast: true
+  jackson:
+    serialization:
+      indent-output: true
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: false
+    service-url:
+      defaultZone: http://localhost:9001/eureka/
+  instance:
+    prefer-ip-address: true
